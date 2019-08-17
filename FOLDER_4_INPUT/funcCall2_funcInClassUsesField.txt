@@ -1,0 +1,16 @@
+class Father {
+int i := 3;
+void SWIM() { PrintInt( i ); }
+}
+
+class Son extends Father {
+void RUN()  { SWIM(); }
+}
+
+void main()
+{
+	Son g1 := new Son;
+	g1.RUN();
+}
+
+//passes prints 3

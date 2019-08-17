@@ -1,0 +1,13 @@
+array IntArray = int[]
+
+class Person
+{
+	int ID;
+	int age := 10;
+}
+
+void main()
+{
+    Person p;
+    p.age := 20;
+}

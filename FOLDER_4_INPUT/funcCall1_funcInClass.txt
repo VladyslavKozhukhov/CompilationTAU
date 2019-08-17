@@ -1,0 +1,13 @@
+class Father {
+void SWIM() { PrintString("FatherSWIM" ); }
+}
+
+class Son extends Father {
+void RUN()  { SWIM(); }
+}
+
+void main()
+{
+	Son g1 := new Son;
+	g1.RUN();
+}

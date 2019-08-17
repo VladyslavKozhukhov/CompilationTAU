@@ -1,0 +1,20 @@
+
+class Grandfather {
+void WALK(){ PrintString("GrandfatherWALK"); }
+void RUN() { PrintString("GrandfatherRUN" ); }
+void SWIM(){ PrintString("GrandfatherSWIM"); }
+}
+
+array ClassArray = Grandfather[]
+
+void main()
+{
+	int i := 0;
+	ClassArray A := new Grandfather[27];
+
+	while (i < 27)
+	{
+		A[i] := nil;
+		i := i + 1;
+	}
+}

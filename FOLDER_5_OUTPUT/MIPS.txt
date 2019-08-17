@@ -1,0 +1,1264 @@
+.data
+	Label_20_Student_vTable: .space 12
+	Label_17_Person_vTable: .space 8
+	string_birthday: .asciiz "birthday"
+	string_getAge: .asciiz "getAge"
+	string_monthJuly: .asciiz "monthJuly"
+	string_main: .asciiz "main"
+	string_getAverage: .asciiz "getAverage"
+	string_access_violation: .asciiz "Access Violation"
+	string_illegal_div_by_0: .asciiz "Division By Zero"
+	string_invalid_ptr_dref: .asciiz "Invalid Pointer Dereference"
+.text
+main:
+	la Temp_175, Label_20_Student_vTable
+	la Temp_176, Label_13_getAge
+	addi Temp_175,Temp_175,0
+	sw Temp_176,(Temp_175)
+	la Temp_177, Label_20_Student_vTable
+	la Temp_178, Label_15_birthday
+	addi Temp_177,Temp_177,4
+	sw Temp_178,(Temp_177)
+	la Temp_179, Label_20_Student_vTable
+	la Temp_180, Label_18_getAverage
+	addi Temp_179,Temp_179,8
+	sw Temp_180,(Temp_179)
+	la Temp_181, Label_17_Person_vTable
+	la Temp_182, Label_13_getAge
+	addi Temp_181,Temp_181,0
+	sw Temp_182,(Temp_181)
+	la Temp_183, Label_17_Person_vTable
+	la Temp_184, Label_15_birthday
+	addi Temp_183,Temp_183,4
+	sw Temp_184,(Temp_183)
+	j main_function
+Label_11_monthJuly:
+	la Temp_185, string_monthJuly
+	addi $sp, $sp, -8
+	sw	$fp, 0($sp)
+	sw	$ra, 4($sp)
+	addi $fp, $sp, 0
+	addi $sp, $sp, -8
+	sw Temp_185, -4($fp)
+	li Temp_0,7
+	sw Temp_0, -8($fp)
+	lw Temp_1, -8($fp)
+	addi $v0, Temp_1, 0
+	j Label_12_endmonthJuly
+Label_12_endmonthJuly: 
+	addi $sp, $sp, 8
+	lw	$ra, 4($fp)
+	lw	$fp, ($fp)
+	addi $sp, $sp, 8
+	jr $ra
+Label_13_getAge:
+	la Temp_186, string_getAge
+	addi $sp, $sp, -8
+	sw	$fp, 0($sp)
+	sw	$ra, 4($sp)
+	addi $fp, $sp, 0
+	addi $sp, $sp, -4
+	sw Temp_186, -4($fp)
+	lw Temp_187, 8($fp)
+	addi Temp_187,Temp_187,8
+	lw Temp_2,0(Temp_187)
+	addi $v0, Temp_2, 0
+	j Label_14_endgetAge
+Label_14_endgetAge: 
+	addi $sp, $sp, 4
+	lw	$ra, 4($fp)
+	lw	$fp, ($fp)
+	addi $sp, $sp, 8
+	jr $ra
+Label_15_birthday:
+	la Temp_188, string_birthday
+	addi $sp, $sp, -8
+	sw	$fp, 0($sp)
+	sw	$ra, 4($sp)
+	addi $fp, $sp, 0
+	addi $sp, $sp, -4
+	sw Temp_188, -4($fp)
+	lw Temp_189, 8($fp)
+	addi Temp_189,Temp_189,8
+	lw Temp_4,0(Temp_189)
+	li Temp_5,1
+	add Temp_3,Temp_4,Temp_5
+	li Temp_190,32767
+	blt Temp_190,Temp_3,Label_26_overflow
+	li Temp_190,-32768
+	blt Temp_3,Temp_190,Label_27_underflow
+	j Label_25_end
+Label_26_overflow:
+	li Temp_3,32767
+	j Label_25_end
+Label_27_underflow:
+	li Temp_3,-32768
+Label_25_end:
+	lw Temp_191, 8($fp)
+	addi Temp_191,Temp_191,8
+	sw Temp_3,0(Temp_191)
+	lw Temp_192, 8($fp)
+	addi Temp_192,Temp_192,8
+	lw Temp_6,0(Temp_192)
+	addi $v0, Temp_6, 0
+	j Label_16_endbirthday
+Label_16_endbirthday: 
+	addi $sp, $sp, 4
+	lw	$ra, 4($fp)
+	lw	$fp, ($fp)
+	addi $sp, $sp, 8
+	jr $ra
+Label_18_getAverage:
+	la Temp_193, string_getAverage
+	addi $sp, $sp, -8
+	sw	$fp, 0($sp)
+	sw	$ra, 4($sp)
+	addi $fp, $sp, 0
+	addi $sp, $sp, -12
+	sw Temp_193, -4($fp)
+	li Temp_7,0
+	sw Temp_7, -8($fp)
+	li Temp_8,0
+	sw Temp_8, -12($fp)
+	j Label_22_whileCondition
+Label_23_whileBody:
+	lw Temp_10, -12($fp)
+	lw Temp_194, 8($fp)
+	addi Temp_194,Temp_194,4
+	lw Temp_12,0(Temp_194)
+	lw Temp_13, -8($fp)
+	lw Temp_195,0(Temp_12)
+	bge Temp_13,Temp_195,Label_28_not_valid_index
+	bltz Temp_13, Label_28_not_valid_index
+	addi Temp_13,Temp_13,1
+	sll Temp_13, Temp_13, 2
+	add Temp_12,Temp_12,Temp_13
+	lw Temp_11,0(Temp_12)
+	j Label_29_end
+Label_28_not_valid_index:
+	la $a0, string_access_violation
+	li $v0,4
+	syscall
+	li $v0, 10
+	syscall
+Label_29_end:
+	add Temp_9,Temp_10,Temp_11
+	li Temp_196,32767
+	blt Temp_196,Temp_9,Label_31_overflow
+	li Temp_196,-32768
+	blt Temp_9,Temp_196,Label_32_underflow
+	j Label_30_end
+Label_31_overflow:
+	li Temp_9,32767
+	j Label_30_end
+Label_32_underflow:
+	li Temp_9,-32768
+Label_30_end:
+	sw Temp_9, -12($fp)
+	lw Temp_15, -8($fp)
+	li Temp_16,1
+	add Temp_14,Temp_15,Temp_16
+	li Temp_197,32767
+	blt Temp_197,Temp_14,Label_34_overflow
+	li Temp_197,-32768
+	blt Temp_14,Temp_197,Label_35_underflow
+	j Label_33_end
+Label_34_overflow:
+	li Temp_14,32767
+	j Label_33_end
+Label_35_underflow:
+	li Temp_14,-32768
+Label_33_end:
+	sw Temp_14, -8($fp)
+Label_22_whileCondition:
+	lw Temp_18, -8($fp)
+	li Temp_19,10
+	blt Temp_18,Temp_19,Label_37_AssignOne
+	bge Temp_18,Temp_19,Label_38_AssignZero
+Label_37_AssignOne:
+	li Temp_17,1
+	j Label_36_end
+Label_38_AssignZero:
+	li Temp_17,0
+Label_36_end:
+	bne Temp_17, $zero, Label_23_whileBody
+	lw Temp_21, -12($fp)
+	li Temp_22,10
+	bne Temp_22, $zero, Label_40_division
+	la $a0, string_illegal_div_by_0
+	li $v0,4
+	syscall
+	li $v0, 10
+	syscall
+Label_40_division:
+	div Temp_21, Temp_22
+	mflo Temp_20
+	li Temp_198,32767
+	blt Temp_198,Temp_20,Label_41_overflow
+	li Temp_198,-32768
+	blt Temp_20,Temp_198,Label_42_underflow
+	j Label_39_end
+Label_41_overflow:
+	li Temp_20,32767
+	j Label_39_end
+Label_42_underflow:
+	li Temp_20,-32768
+Label_39_end:
+	addi $v0, Temp_20, 0
+	j Label_19_endgetAverage
+Label_19_endgetAverage: 
+	addi $sp, $sp, 12
+	lw	$ra, 4($fp)
+	lw	$fp, ($fp)
+	addi $sp, $sp, 8
+	jr $ra
+main_function:
+	la Temp_199, string_main
+	addi $sp, $sp, -8
+	sw	$fp, 0($sp)
+	sw	$ra, 4($sp)
+	addi $fp, $sp, 0
+	addi $sp, $sp, -48
+	sw Temp_199, -4($fp)
+	addi Temp_200, $zero, 20
+	addi $a0, Temp_200, 0
+	li $v0,9
+	syscall
+	addi Temp_24 , $v0 , 0
+	move Temp_23, Temp_24
+	la Temp_25, Label_20_Student_vTable
+	sw Temp_25,0(Temp_24)
+	addi Temp_26, $zero, 0
+	addi Temp_24,Temp_24,4
+	sw Temp_26,0(Temp_24)
+	li Temp_27,10
+	addi Temp_24,Temp_24,4
+	sw Temp_27,0(Temp_24)
+	addi Temp_28, $zero, 0
+	addi Temp_24,Temp_24,4
+	sw Temp_28,0(Temp_24)
+	addi Temp_29, $zero, 0
+	addi Temp_24,Temp_24,4
+	sw Temp_29,0(Temp_24)
+	sw Temp_23, -8($fp)
+	li Temp_31,10
+	addi Temp_31,Temp_31,1
+	sll Temp_31, Temp_31, 2
+	addi $a0, Temp_31, 0
+	li $v0,9
+	syscall
+	addi Temp_30 , $v0 , 0
+	add Temp_201, Temp_30, Temp_31
+Label_43_clearAllocation: 
+	addi Temp_201, Temp_201, -4
+	sw $zero, 0(Temp_201)
+	bne Temp_201, Temp_30, Label_43_clearAllocation
+	srl Temp_31, Temp_31,2
+	addi Temp_31,Temp_31,-1
+	sw Temp_31,0(Temp_30)
+	lw Temp_32, -8($fp)
+	bne Temp_32, $zero, Label_44_not_nil
+	la $a0, string_invalid_ptr_dref
+	li $v0,4
+	syscall
+	li $v0, 10
+	syscall
+Label_44_not_nil:
+	addi Temp_32,Temp_32,4
+	sw Temp_30,0(Temp_32)
+	li Temp_34,13
+	addi Temp_34,Temp_34,1
+	sll Temp_34, Temp_34, 2
+	addi $a0, Temp_34, 0
+	li $v0,9
+	syscall
+	addi Temp_33 , $v0 , 0
+	add Temp_202, Temp_33, Temp_34
+Label_45_clearAllocation: 
+	addi Temp_202, Temp_202, -4
+	sw $zero, 0(Temp_202)
+	bne Temp_202, Temp_33, Label_45_clearAllocation
+	srl Temp_34, Temp_34,2
+	addi Temp_34,Temp_34,-1
+	sw Temp_34,0(Temp_33)
+	lw Temp_35, -8($fp)
+	bne Temp_35, $zero, Label_46_not_nil
+	la $a0, string_invalid_ptr_dref
+	li $v0,4
+	syscall
+	li $v0, 10
+	syscall
+Label_46_not_nil:
+	addi Temp_35,Temp_35,12
+	sw Temp_33,0(Temp_35)
+	li Temp_36,0
+	lw Temp_38, -8($fp)
+	bne Temp_38, $zero, Label_47_not_nil
+	la $a0, string_invalid_ptr_dref
+	li $v0,4
+	syscall
+	li $v0, 10
+	syscall
+Label_47_not_nil:
+	addi Temp_38,Temp_38,12
+	lw Temp_37,0(Temp_38)
+	li Temp_39,7400
+	lw Temp_203,0(Temp_37)
+	bge Temp_36,Temp_203,Label_48_not_valid_index
+	bltz Temp_36, Label_48_not_valid_index
+	addi Temp_36,Temp_36,1
+	sll Temp_36, Temp_36, 2
+	add Temp_37,Temp_37,Temp_36
+	sw Temp_39,0(Temp_37)
+	j Label_49_end
+Label_48_not_valid_index:
+	la $a0, string_access_violation
+	li $v0,4
+	syscall
+	li $v0, 10
+	syscall
+Label_49_end:
+	li Temp_40,1
+	lw Temp_42, -8($fp)
+	bne Temp_42, $zero, Label_50_not_nil
+	la $a0, string_invalid_ptr_dref
+	li $v0,4
+	syscall
+	li $v0, 10
+	syscall
+Label_50_not_nil:
+	addi Temp_42,Temp_42,12
+	lw Temp_41,0(Temp_42)
+	li Temp_43,7400
+	lw Temp_204,0(Temp_41)
+	bge Temp_40,Temp_204,Label_51_not_valid_index
+	bltz Temp_40, Label_51_not_valid_index
+	addi Temp_40,Temp_40,1
+	sll Temp_40, Temp_40, 2
+	add Temp_41,Temp_41,Temp_40
+	sw Temp_43,0(Temp_41)
+	j Label_52_end
+Label_51_not_valid_index:
+	la $a0, string_access_violation
+	li $v0,4
+	syscall
+	li $v0, 10
+	syscall
+Label_52_end:
+	li Temp_44,2
+	lw Temp_46, -8($fp)
+	bne Temp_46, $zero, Label_53_not_nil
+	la $a0, string_invalid_ptr_dref
+	li $v0,4
+	syscall
+	li $v0, 10
+	syscall
+Label_53_not_nil:
+	addi Temp_46,Temp_46,12
+	lw Temp_45,0(Temp_46)
+	li Temp_47,7400
+	lw Temp_205,0(Temp_45)
+	bge Temp_44,Temp_205,Label_54_not_valid_index
+	bltz Temp_44, Label_54_not_valid_index
+	addi Temp_44,Temp_44,1
+	sll Temp_44, Temp_44, 2
+	add Temp_45,Temp_45,Temp_44
+	sw Temp_47,0(Temp_45)
+	j Label_55_end
+Label_54_not_valid_index:
+	la $a0, string_access_violation
+	li $v0,4
+	syscall
+	li $v0, 10
+	syscall
+Label_55_end:
+	li Temp_48,3
+	lw Temp_50, -8($fp)
+	bne Temp_50, $zero, Label_56_not_nil
+	la $a0, string_invalid_ptr_dref
+	li $v0,4
+	syscall
+	li $v0, 10
+	syscall
+Label_56_not_nil:
+	addi Temp_50,Temp_50,12
+	lw Temp_49,0(Temp_50)
+	li Temp_51,7400
+	lw Temp_206,0(Temp_49)
+	bge Temp_48,Temp_206,Label_57_not_valid_index
+	bltz Temp_48, Label_57_not_valid_index
+	addi Temp_48,Temp_48,1
+	sll Temp_48, Temp_48, 2
+	add Temp_49,Temp_49,Temp_48
+	sw Temp_51,0(Temp_49)
+	j Label_58_end
+Label_57_not_valid_index:
+	la $a0, string_access_violation
+	li $v0,4
+	syscall
+	li $v0, 10
+	syscall
+Label_58_end:
+	li Temp_52,4
+	lw Temp_54, -8($fp)
+	bne Temp_54, $zero, Label_59_not_nil
+	la $a0, string_invalid_ptr_dref
+	li $v0,4
+	syscall
+	li $v0, 10
+	syscall
+Label_59_not_nil:
+	addi Temp_54,Temp_54,12
+	lw Temp_53,0(Temp_54)
+	li Temp_55,7400
+	lw Temp_207,0(Temp_53)
+	bge Temp_52,Temp_207,Label_60_not_valid_index
+	bltz Temp_52, Label_60_not_valid_index
+	addi Temp_52,Temp_52,1
+	sll Temp_52, Temp_52, 2
+	add Temp_53,Temp_53,Temp_52
+	sw Temp_55,0(Temp_53)
+	j Label_61_end
+Label_60_not_valid_index:
+	la $a0, string_access_violation
+	li $v0,4
+	syscall
+	li $v0, 10
+	syscall
+Label_61_end:
+	li Temp_56,5
+	lw Temp_58, -8($fp)
+	bne Temp_58, $zero, Label_62_not_nil
+	la $a0, string_invalid_ptr_dref
+	li $v0,4
+	syscall
+	li $v0, 10
+	syscall
+Label_62_not_nil:
+	addi Temp_58,Temp_58,12
+	lw Temp_57,0(Temp_58)
+	li Temp_59,7400
+	lw Temp_208,0(Temp_57)
+	bge Temp_56,Temp_208,Label_63_not_valid_index
+	bltz Temp_56, Label_63_not_valid_index
+	addi Temp_56,Temp_56,1
+	sll Temp_56, Temp_56, 2
+	add Temp_57,Temp_57,Temp_56
+	sw Temp_59,0(Temp_57)
+	j Label_64_end
+Label_63_not_valid_index:
+	la $a0, string_access_violation
+	li $v0,4
+	syscall
+	li $v0, 10
+	syscall
+Label_64_end:
+	li Temp_60,6
+	lw Temp_62, -8($fp)
+	bne Temp_62, $zero, Label_65_not_nil
+	la $a0, string_invalid_ptr_dref
+	li $v0,4
+	syscall
+	li $v0, 10
+	syscall
+Label_65_not_nil:
+	addi Temp_62,Temp_62,12
+	lw Temp_61,0(Temp_62)
+	li Temp_63,7400
+	lw Temp_209,0(Temp_61)
+	bge Temp_60,Temp_209,Label_66_not_valid_index
+	bltz Temp_60, Label_66_not_valid_index
+	addi Temp_60,Temp_60,1
+	sll Temp_60, Temp_60, 2
+	add Temp_61,Temp_61,Temp_60
+	sw Temp_63,0(Temp_61)
+	j Label_67_end
+Label_66_not_valid_index:
+	la $a0, string_access_violation
+	li $v0,4
+	syscall
+	li $v0, 10
+	syscall
+Label_67_end:
+	li Temp_64,7
+	lw Temp_66, -8($fp)
+	bne Temp_66, $zero, Label_68_not_nil
+	la $a0, string_invalid_ptr_dref
+	li $v0,4
+	syscall
+	li $v0, 10
+	syscall
+Label_68_not_nil:
+	addi Temp_66,Temp_66,12
+	lw Temp_65,0(Temp_66)
+	li Temp_67,7400
+	lw Temp_210,0(Temp_65)
+	bge Temp_64,Temp_210,Label_69_not_valid_index
+	bltz Temp_64, Label_69_not_valid_index
+	addi Temp_64,Temp_64,1
+	sll Temp_64, Temp_64, 2
+	add Temp_65,Temp_65,Temp_64
+	sw Temp_67,0(Temp_65)
+	j Label_70_end
+Label_69_not_valid_index:
+	la $a0, string_access_violation
+	li $v0,4
+	syscall
+	li $v0, 10
+	syscall
+Label_70_end:
+	li Temp_68,8
+	lw Temp_70, -8($fp)
+	bne Temp_70, $zero, Label_71_not_nil
+	la $a0, string_invalid_ptr_dref
+	li $v0,4
+	syscall
+	li $v0, 10
+	syscall
+Label_71_not_nil:
+	addi Temp_70,Temp_70,12
+	lw Temp_69,0(Temp_70)
+	li Temp_71,7400
+	lw Temp_211,0(Temp_69)
+	bge Temp_68,Temp_211,Label_72_not_valid_index
+	bltz Temp_68, Label_72_not_valid_index
+	addi Temp_68,Temp_68,1
+	sll Temp_68, Temp_68, 2
+	add Temp_69,Temp_69,Temp_68
+	sw Temp_71,0(Temp_69)
+	j Label_73_end
+Label_72_not_valid_index:
+	la $a0, string_access_violation
+	li $v0,4
+	syscall
+	li $v0, 10
+	syscall
+Label_73_end:
+	li Temp_72,9
+	lw Temp_74, -8($fp)
+	bne Temp_74, $zero, Label_74_not_nil
+	la $a0, string_invalid_ptr_dref
+	li $v0,4
+	syscall
+	li $v0, 10
+	syscall
+Label_74_not_nil:
+	addi Temp_74,Temp_74,12
+	lw Temp_73,0(Temp_74)
+	li Temp_75,7400
+	lw Temp_212,0(Temp_73)
+	bge Temp_72,Temp_212,Label_75_not_valid_index
+	bltz Temp_72, Label_75_not_valid_index
+	addi Temp_72,Temp_72,1
+	sll Temp_72, Temp_72, 2
+	add Temp_73,Temp_73,Temp_72
+	sw Temp_75,0(Temp_73)
+	j Label_76_end
+Label_75_not_valid_index:
+	la $a0, string_access_violation
+	li $v0,4
+	syscall
+	li $v0, 10
+	syscall
+Label_76_end:
+	li Temp_76,10
+	lw Temp_78, -8($fp)
+	bne Temp_78, $zero, Label_77_not_nil
+	la $a0, string_invalid_ptr_dref
+	li $v0,4
+	syscall
+	li $v0, 10
+	syscall
+Label_77_not_nil:
+	addi Temp_78,Temp_78,12
+	lw Temp_77,0(Temp_78)
+	li Temp_79,7400
+	lw Temp_213,0(Temp_77)
+	bge Temp_76,Temp_213,Label_78_not_valid_index
+	bltz Temp_76, Label_78_not_valid_index
+	addi Temp_76,Temp_76,1
+	sll Temp_76, Temp_76, 2
+	add Temp_77,Temp_77,Temp_76
+	sw Temp_79,0(Temp_77)
+	j Label_79_end
+Label_78_not_valid_index:
+	la $a0, string_access_violation
+	li $v0,4
+	syscall
+	li $v0, 10
+	syscall
+Label_79_end:
+	li Temp_80,11
+	lw Temp_82, -8($fp)
+	bne Temp_82, $zero, Label_80_not_nil
+	la $a0, string_invalid_ptr_dref
+	li $v0,4
+	syscall
+	li $v0, 10
+	syscall
+Label_80_not_nil:
+	addi Temp_82,Temp_82,12
+	lw Temp_81,0(Temp_82)
+	li Temp_83,7400
+	lw Temp_214,0(Temp_81)
+	bge Temp_80,Temp_214,Label_81_not_valid_index
+	bltz Temp_80, Label_81_not_valid_index
+	addi Temp_80,Temp_80,1
+	sll Temp_80, Temp_80, 2
+	add Temp_81,Temp_81,Temp_80
+	sw Temp_83,0(Temp_81)
+	j Label_82_end
+Label_81_not_valid_index:
+	la $a0, string_access_violation
+	li $v0,4
+	syscall
+	li $v0, 10
+	syscall
+Label_82_end:
+	li Temp_84,12
+	lw Temp_86, -8($fp)
+	bne Temp_86, $zero, Label_83_not_nil
+	la $a0, string_invalid_ptr_dref
+	li $v0,4
+	syscall
+	li $v0, 10
+	syscall
+Label_83_not_nil:
+	addi Temp_86,Temp_86,12
+	lw Temp_85,0(Temp_86)
+	li Temp_87,7400
+	lw Temp_215,0(Temp_85)
+	bge Temp_84,Temp_215,Label_84_not_valid_index
+	bltz Temp_84, Label_84_not_valid_index
+	addi Temp_84,Temp_84,1
+	sll Temp_84, Temp_84, 2
+	add Temp_85,Temp_85,Temp_84
+	sw Temp_87,0(Temp_85)
+	j Label_85_end
+Label_84_not_valid_index:
+	la $a0, string_access_violation
+	li $v0,4
+	syscall
+	li $v0, 10
+	syscall
+Label_85_end:
+	li Temp_88,0
+	sw Temp_88, -12($fp)
+	li Temp_89,1
+	sw Temp_89, -16($fp)
+	li Temp_90,2
+	sw Temp_90, -20($fp)
+	li Temp_91,3
+	sw Temp_91, -24($fp)
+	li Temp_92,4
+	sw Temp_92, -28($fp)
+	li Temp_93,5
+	sw Temp_93, -32($fp)
+	li Temp_94,6
+	sw Temp_94, -36($fp)
+	li Temp_95,7
+	sw Temp_95, -40($fp)
+	li Temp_96,8
+	sw Temp_96, -44($fp)
+	li Temp_97,9
+	sw Temp_97, -48($fp)
+	lw Temp_98, -12($fp)
+	lw Temp_100, -8($fp)
+	bne Temp_100, $zero, Label_86_not_nil
+	la $a0, string_invalid_ptr_dref
+	li $v0,4
+	syscall
+	li $v0, 10
+	syscall
+Label_86_not_nil:
+	addi Temp_100,Temp_100,4
+	lw Temp_99,0(Temp_100)
+	li Temp_101,96
+	lw Temp_216,0(Temp_99)
+	bge Temp_98,Temp_216,Label_87_not_valid_index
+	bltz Temp_98, Label_87_not_valid_index
+	addi Temp_98,Temp_98,1
+	sll Temp_98, Temp_98, 2
+	add Temp_99,Temp_99,Temp_98
+	sw Temp_101,0(Temp_99)
+	j Label_88_end
+Label_87_not_valid_index:
+	la $a0, string_access_violation
+	li $v0,4
+	syscall
+	li $v0, 10
+	syscall
+Label_88_end:
+	lw Temp_102, -16($fp)
+	lw Temp_104, -8($fp)
+	bne Temp_104, $zero, Label_89_not_nil
+	la $a0, string_invalid_ptr_dref
+	li $v0,4
+	syscall
+	li $v0, 10
+	syscall
+Label_89_not_nil:
+	addi Temp_104,Temp_104,4
+	lw Temp_103,0(Temp_104)
+	li Temp_105,100
+	lw Temp_217,0(Temp_103)
+	bge Temp_102,Temp_217,Label_90_not_valid_index
+	bltz Temp_102, Label_90_not_valid_index
+	addi Temp_102,Temp_102,1
+	sll Temp_102, Temp_102, 2
+	add Temp_103,Temp_103,Temp_102
+	sw Temp_105,0(Temp_103)
+	j Label_91_end
+Label_90_not_valid_index:
+	la $a0, string_access_violation
+	li $v0,4
+	syscall
+	li $v0, 10
+	syscall
+Label_91_end:
+	lw Temp_106, -20($fp)
+	lw Temp_108, -8($fp)
+	bne Temp_108, $zero, Label_92_not_nil
+	la $a0, string_invalid_ptr_dref
+	li $v0,4
+	syscall
+	li $v0, 10
+	syscall
+Label_92_not_nil:
+	addi Temp_108,Temp_108,4
+	lw Temp_107,0(Temp_108)
+	li Temp_109,95
+	lw Temp_218,0(Temp_107)
+	bge Temp_106,Temp_218,Label_93_not_valid_index
+	bltz Temp_106, Label_93_not_valid_index
+	addi Temp_106,Temp_106,1
+	sll Temp_106, Temp_106, 2
+	add Temp_107,Temp_107,Temp_106
+	sw Temp_109,0(Temp_107)
+	j Label_94_end
+Label_93_not_valid_index:
+	la $a0, string_access_violation
+	li $v0,4
+	syscall
+	li $v0, 10
+	syscall
+Label_94_end:
+	lw Temp_110, -24($fp)
+	lw Temp_112, -8($fp)
+	bne Temp_112, $zero, Label_95_not_nil
+	la $a0, string_invalid_ptr_dref
+	li $v0,4
+	syscall
+	li $v0, 10
+	syscall
+Label_95_not_nil:
+	addi Temp_112,Temp_112,4
+	lw Temp_111,0(Temp_112)
+	li Temp_113,81
+	lw Temp_219,0(Temp_111)
+	bge Temp_110,Temp_219,Label_96_not_valid_index
+	bltz Temp_110, Label_96_not_valid_index
+	addi Temp_110,Temp_110,1
+	sll Temp_110, Temp_110, 2
+	add Temp_111,Temp_111,Temp_110
+	sw Temp_113,0(Temp_111)
+	j Label_97_end
+Label_96_not_valid_index:
+	la $a0, string_access_violation
+	li $v0,4
+	syscall
+	li $v0, 10
+	syscall
+Label_97_end:
+	lw Temp_114, -28($fp)
+	lw Temp_116, -8($fp)
+	bne Temp_116, $zero, Label_98_not_nil
+	la $a0, string_invalid_ptr_dref
+	li $v0,4
+	syscall
+	li $v0, 10
+	syscall
+Label_98_not_nil:
+	addi Temp_116,Temp_116,4
+	lw Temp_115,0(Temp_116)
+	li Temp_117,95
+	lw Temp_220,0(Temp_115)
+	bge Temp_114,Temp_220,Label_99_not_valid_index
+	bltz Temp_114, Label_99_not_valid_index
+	addi Temp_114,Temp_114,1
+	sll Temp_114, Temp_114, 2
+	add Temp_115,Temp_115,Temp_114
+	sw Temp_117,0(Temp_115)
+	j Label_100_end
+Label_99_not_valid_index:
+	la $a0, string_access_violation
+	li $v0,4
+	syscall
+	li $v0, 10
+	syscall
+Label_100_end:
+	lw Temp_118, -32($fp)
+	lw Temp_120, -8($fp)
+	bne Temp_120, $zero, Label_101_not_nil
+	la $a0, string_invalid_ptr_dref
+	li $v0,4
+	syscall
+	li $v0, 10
+	syscall
+Label_101_not_nil:
+	addi Temp_120,Temp_120,4
+	lw Temp_119,0(Temp_120)
+	li Temp_121,95
+	lw Temp_221,0(Temp_119)
+	bge Temp_118,Temp_221,Label_102_not_valid_index
+	bltz Temp_118, Label_102_not_valid_index
+	addi Temp_118,Temp_118,1
+	sll Temp_118, Temp_118, 2
+	add Temp_119,Temp_119,Temp_118
+	sw Temp_121,0(Temp_119)
+	j Label_103_end
+Label_102_not_valid_index:
+	la $a0, string_access_violation
+	li $v0,4
+	syscall
+	li $v0, 10
+	syscall
+Label_103_end:
+	lw Temp_122, -36($fp)
+	lw Temp_124, -8($fp)
+	bne Temp_124, $zero, Label_104_not_nil
+	la $a0, string_invalid_ptr_dref
+	li $v0,4
+	syscall
+	li $v0, 10
+	syscall
+Label_104_not_nil:
+	addi Temp_124,Temp_124,4
+	lw Temp_123,0(Temp_124)
+	li Temp_125,100
+	lw Temp_222,0(Temp_123)
+	bge Temp_122,Temp_222,Label_105_not_valid_index
+	bltz Temp_122, Label_105_not_valid_index
+	addi Temp_122,Temp_122,1
+	sll Temp_122, Temp_122, 2
+	add Temp_123,Temp_123,Temp_122
+	sw Temp_125,0(Temp_123)
+	j Label_106_end
+Label_105_not_valid_index:
+	la $a0, string_access_violation
+	li $v0,4
+	syscall
+	li $v0, 10
+	syscall
+Label_106_end:
+	lw Temp_126, -40($fp)
+	lw Temp_128, -8($fp)
+	bne Temp_128, $zero, Label_107_not_nil
+	la $a0, string_invalid_ptr_dref
+	li $v0,4
+	syscall
+	li $v0, 10
+	syscall
+Label_107_not_nil:
+	addi Temp_128,Temp_128,4
+	lw Temp_127,0(Temp_128)
+	li Temp_129,100
+	lw Temp_223,0(Temp_127)
+	bge Temp_126,Temp_223,Label_108_not_valid_index
+	bltz Temp_126, Label_108_not_valid_index
+	addi Temp_126,Temp_126,1
+	sll Temp_126, Temp_126, 2
+	add Temp_127,Temp_127,Temp_126
+	sw Temp_129,0(Temp_127)
+	j Label_109_end
+Label_108_not_valid_index:
+	la $a0, string_access_violation
+	li $v0,4
+	syscall
+	li $v0, 10
+	syscall
+Label_109_end:
+	lw Temp_130, -44($fp)
+	lw Temp_132, -8($fp)
+	bne Temp_132, $zero, Label_110_not_nil
+	la $a0, string_invalid_ptr_dref
+	li $v0,4
+	syscall
+	li $v0, 10
+	syscall
+Label_110_not_nil:
+	addi Temp_132,Temp_132,4
+	lw Temp_131,0(Temp_132)
+	li Temp_133,74
+	lw Temp_224,0(Temp_131)
+	bge Temp_130,Temp_224,Label_111_not_valid_index
+	bltz Temp_130, Label_111_not_valid_index
+	addi Temp_130,Temp_130,1
+	sll Temp_130, Temp_130, 2
+	add Temp_131,Temp_131,Temp_130
+	sw Temp_133,0(Temp_131)
+	j Label_112_end
+Label_111_not_valid_index:
+	la $a0, string_access_violation
+	li $v0,4
+	syscall
+	li $v0, 10
+	syscall
+Label_112_end:
+	lw Temp_134, -48($fp)
+	lw Temp_136, -8($fp)
+	bne Temp_136, $zero, Label_113_not_nil
+	la $a0, string_invalid_ptr_dref
+	li $v0,4
+	syscall
+	li $v0, 10
+	syscall
+Label_113_not_nil:
+	addi Temp_136,Temp_136,4
+	lw Temp_135,0(Temp_136)
+	li Temp_137,99
+	lw Temp_225,0(Temp_135)
+	bge Temp_134,Temp_225,Label_114_not_valid_index
+	bltz Temp_134, Label_114_not_valid_index
+	addi Temp_134,Temp_134,1
+	sll Temp_134, Temp_134, 2
+	add Temp_135,Temp_135,Temp_134
+	sw Temp_137,0(Temp_135)
+	j Label_115_end
+Label_114_not_valid_index:
+	la $a0, string_access_violation
+	li $v0,4
+	syscall
+	li $v0, 10
+	syscall
+Label_115_end:
+	lw Temp_141, -8($fp)
+	bne Temp_141, $zero, Label_116_not_nil
+	la $a0, string_invalid_ptr_dref
+	li $v0,4
+	syscall
+	li $v0, 10
+	syscall
+Label_116_not_nil:
+	lw Temp_226,0(Temp_141)
+	addi Temp_226,Temp_226,8
+	lw Temp_140,0(Temp_226)
+	addi $sp, $sp, -32
+	sw	$t0, 0($sp)
+	sw	$t1, 4($sp)
+	sw	$t2, 8($sp)
+	sw	$t3, 12($sp)
+	sw	$t4, 16($sp)
+	sw	$t5, 20($sp)
+	sw	$t6, 24($sp)
+	sw	$t7, 28($sp)
+	addi $sp, $sp, -4
+	sw Temp_141, 0($sp)
+	jalr Temp_140
+	addi $sp, $sp, 4
+	lw	$t0, 0($sp)
+	lw	$t1, 4($sp)
+	lw	$t2, 8($sp)
+	lw	$t3, 12($sp)
+	lw	$t4, 16($sp)
+	lw	$t5, 20($sp)
+	lw	$t6, 24($sp)
+	lw	$t7, 28($sp)
+	addi $sp, $sp, 32
+	addi Temp_139, $v0, 0
+	li Temp_142,60
+	bgt Temp_139, Temp_142, Label_118_AssignOne
+	ble Temp_139, Temp_142, Label_119_AssignZero
+Label_118_AssignOne:
+	li Temp_138,1
+	j Label_117_end
+Label_119_AssignZero:
+	li Temp_138,0
+Label_117_end:
+	beq Temp_138, $zero, Label_24_afterIf
+	lw Temp_144, -8($fp)
+	bne Temp_144, $zero, Label_120_not_nil
+	la $a0, string_invalid_ptr_dref
+	li $v0,4
+	syscall
+	li $v0, 10
+	syscall
+Label_120_not_nil:
+	addi Temp_144,Temp_144,8
+	lw Temp_143,0(Temp_144)
+	lw Temp_146, -8($fp)
+	bne Temp_146, $zero, Label_121_not_nil
+	la $a0, string_invalid_ptr_dref
+	li $v0,4
+	syscall
+	li $v0, 10
+	syscall
+Label_121_not_nil:
+	addi Temp_146,Temp_146,12
+	lw Temp_145,0(Temp_146)
+	lw Temp_150, -8($fp)
+	bne Temp_150, $zero, Label_122_not_nil
+	la $a0, string_invalid_ptr_dref
+	li $v0,4
+	syscall
+	li $v0, 10
+	syscall
+Label_122_not_nil:
+	addi Temp_150,Temp_150,12
+	lw Temp_149,0(Temp_150)
+	lw Temp_153, -8($fp)
+	bne Temp_153, $zero, Label_123_not_nil
+	la $a0, string_invalid_ptr_dref
+	li $v0,4
+	syscall
+	li $v0, 10
+	syscall
+Label_123_not_nil:
+	lw Temp_227,0(Temp_153)
+	addi Temp_227,Temp_227,4
+	lw Temp_152,0(Temp_227)
+	addi $sp, $sp, -32
+	sw	$t0, 0($sp)
+	sw	$t1, 4($sp)
+	sw	$t2, 8($sp)
+	sw	$t3, 12($sp)
+	sw	$t4, 16($sp)
+	sw	$t5, 20($sp)
+	sw	$t6, 24($sp)
+	sw	$t7, 28($sp)
+	addi $sp, $sp, -4
+	sw Temp_153, 0($sp)
+	jalr Temp_152
+	addi $sp, $sp, 4
+	lw	$t0, 0($sp)
+	lw	$t1, 4($sp)
+	lw	$t2, 8($sp)
+	lw	$t3, 12($sp)
+	lw	$t4, 16($sp)
+	lw	$t5, 20($sp)
+	lw	$t6, 24($sp)
+	lw	$t7, 28($sp)
+	addi $sp, $sp, 32
+	addi Temp_151, $v0, 0
+	lw Temp_228,0(Temp_149)
+	bge Temp_151,Temp_228,Label_124_not_valid_index
+	bltz Temp_151, Label_124_not_valid_index
+	addi Temp_151,Temp_151,1
+	sll Temp_151, Temp_151, 2
+	add Temp_149,Temp_149,Temp_151
+	lw Temp_148,0(Temp_149)
+	j Label_125_end
+Label_124_not_valid_index:
+	la $a0, string_access_violation
+	li $v0,4
+	syscall
+	li $v0, 10
+	syscall
+Label_125_end:
+	li Temp_154,1000
+	add Temp_147,Temp_148,Temp_154
+	li Temp_229,32767
+	blt Temp_229,Temp_147,Label_127_overflow
+	li Temp_229,-32768
+	blt Temp_147,Temp_229,Label_128_underflow
+	j Label_126_end
+Label_127_overflow:
+	li Temp_147,32767
+	j Label_126_end
+Label_128_underflow:
+	li Temp_147,-32768
+Label_126_end:
+	lw Temp_230,0(Temp_145)
+	bge Temp_143,Temp_230,Label_129_not_valid_index
+	bltz Temp_143, Label_129_not_valid_index
+	addi Temp_143,Temp_143,1
+	sll Temp_143, Temp_143, 2
+	add Temp_145,Temp_145,Temp_143
+	sw Temp_147,0(Temp_145)
+	j Label_130_end
+Label_129_not_valid_index:
+	la $a0, string_access_violation
+	li $v0,4
+	syscall
+	li $v0, 10
+	syscall
+Label_130_end:
+	lw Temp_156, -8($fp)
+	bne Temp_156, $zero, Label_131_not_nil
+	la $a0, string_invalid_ptr_dref
+	li $v0,4
+	syscall
+	li $v0, 10
+	syscall
+Label_131_not_nil:
+	addi Temp_156,Temp_156,8
+	lw Temp_155,0(Temp_156)
+	lw Temp_158, -8($fp)
+	bne Temp_158, $zero, Label_132_not_nil
+	la $a0, string_invalid_ptr_dref
+	li $v0,4
+	syscall
+	li $v0, 10
+	syscall
+Label_132_not_nil:
+	addi Temp_158,Temp_158,12
+	lw Temp_157,0(Temp_158)
+	lw Temp_162, -8($fp)
+	bne Temp_162, $zero, Label_133_not_nil
+	la $a0, string_invalid_ptr_dref
+	li $v0,4
+	syscall
+	li $v0, 10
+	syscall
+Label_133_not_nil:
+	addi Temp_162,Temp_162,12
+	lw Temp_161,0(Temp_162)
+	lw Temp_165, -8($fp)
+	bne Temp_165, $zero, Label_134_not_nil
+	la $a0, string_invalid_ptr_dref
+	li $v0,4
+	syscall
+	li $v0, 10
+	syscall
+Label_134_not_nil:
+	lw Temp_231,0(Temp_165)
+	addi Temp_231,Temp_231,4
+	lw Temp_164,0(Temp_231)
+	addi $sp, $sp, -32
+	sw	$t0, 0($sp)
+	sw	$t1, 4($sp)
+	sw	$t2, 8($sp)
+	sw	$t3, 12($sp)
+	sw	$t4, 16($sp)
+	sw	$t5, 20($sp)
+	sw	$t6, 24($sp)
+	sw	$t7, 28($sp)
+	addi $sp, $sp, -4
+	sw Temp_165, 0($sp)
+	jalr Temp_164
+	addi $sp, $sp, 4
+	lw	$t0, 0($sp)
+	lw	$t1, 4($sp)
+	lw	$t2, 8($sp)
+	lw	$t3, 12($sp)
+	lw	$t4, 16($sp)
+	lw	$t5, 20($sp)
+	lw	$t6, 24($sp)
+	lw	$t7, 28($sp)
+	addi $sp, $sp, 32
+	addi Temp_163, $v0, 0
+	lw Temp_232,0(Temp_161)
+	bge Temp_163,Temp_232,Label_135_not_valid_index
+	bltz Temp_163, Label_135_not_valid_index
+	addi Temp_163,Temp_163,1
+	sll Temp_163, Temp_163, 2
+	add Temp_161,Temp_161,Temp_163
+	lw Temp_160,0(Temp_161)
+	j Label_136_end
+Label_135_not_valid_index:
+	la $a0, string_access_violation
+	li $v0,4
+	syscall
+	li $v0, 10
+	syscall
+Label_136_end:
+	li Temp_166,1000
+	add Temp_159,Temp_160,Temp_166
+	li Temp_233,32767
+	blt Temp_233,Temp_159,Label_138_overflow
+	li Temp_233,-32768
+	blt Temp_159,Temp_233,Label_139_underflow
+	j Label_137_end
+Label_138_overflow:
+	li Temp_159,32767
+	j Label_137_end
+Label_139_underflow:
+	li Temp_159,-32768
+Label_137_end:
+	lw Temp_234,0(Temp_157)
+	bge Temp_155,Temp_234,Label_140_not_valid_index
+	bltz Temp_155, Label_140_not_valid_index
+	addi Temp_155,Temp_155,1
+	sll Temp_155, Temp_155, 2
+	add Temp_157,Temp_157,Temp_155
+	sw Temp_159,0(Temp_157)
+	j Label_141_end
+Label_140_not_valid_index:
+	la $a0, string_access_violation
+	li $v0,4
+	syscall
+	li $v0, 10
+	syscall
+Label_141_end:
+	lw Temp_169, -8($fp)
+	bne Temp_169, $zero, Label_142_not_nil
+	la $a0, string_invalid_ptr_dref
+	li $v0,4
+	syscall
+	li $v0, 10
+	syscall
+Label_142_not_nil:
+	addi Temp_169,Temp_169,12
+	lw Temp_168,0(Temp_169)
+	li Temp_170,10
+	lw Temp_235,0(Temp_168)
+	bge Temp_170,Temp_235,Label_143_not_valid_index
+	bltz Temp_170, Label_143_not_valid_index
+	addi Temp_170,Temp_170,1
+	sll Temp_170, Temp_170, 2
+	add Temp_168,Temp_168,Temp_170
+	lw Temp_167,0(Temp_168)
+	j Label_144_end
+Label_143_not_valid_index:
+	la $a0, string_access_violation
+	li $v0,4
+	syscall
+	li $v0, 10
+	syscall
+Label_144_end:
+	move $a0,Temp_167
+	li $v0, 1
+	syscall
+	li $a0, 32
+	li $v0, 11
+	syscall
+	lw Temp_173, -8($fp)
+	bne Temp_173, $zero, Label_145_not_nil
+	la $a0, string_invalid_ptr_dref
+	li $v0,4
+	syscall
+	li $v0, 10
+	syscall
+Label_145_not_nil:
+	addi Temp_173,Temp_173,12
+	lw Temp_172,0(Temp_173)
+	li Temp_174,11
+	lw Temp_236,0(Temp_172)
+	bge Temp_174,Temp_236,Label_146_not_valid_index
+	bltz Temp_174, Label_146_not_valid_index
+	addi Temp_174,Temp_174,1
+	sll Temp_174, Temp_174, 2
+	add Temp_172,Temp_172,Temp_174
+	lw Temp_171,0(Temp_172)
+	j Label_147_end
+Label_146_not_valid_index:
+	la $a0, string_access_violation
+	li $v0,4
+	syscall
+	li $v0, 10
+	syscall
+Label_147_end:
+	move $a0,Temp_171
+	li $v0, 1
+	syscall
+	li $a0, 32
+	li $v0, 11
+	syscall
+Label_24_afterIf:
+Label_21_endmain: 
+	addi $sp, $sp, 48
+	lw	$ra, 4($fp)
+	lw	$fp, ($fp)
+	addi $sp, $sp, 8
+	li $v0, 10
+	syscall
